@@ -1,6 +1,14 @@
 from random import shuffle
 import re
 import numpy as np
+import tensorflow as tf
+
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense, GRU, Embedding
+from tensorflow.python.keras.optimizers import Adam
+from tensorflow.python.keras.preprocessing.text import Tokenizer
+from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+from tensorflow.python.keras.models import save_model
 
 
 class TextClassifierModel1:
@@ -24,6 +32,8 @@ class TextClassifierModel1:
         self.x_train_tokens = translate_to_tokens(self.x_train, self.maxSentenceSize, self.dictionary)
         self.x_test_tokens = translate_to_tokens(self.x_test, self.maxSentenceSize, self.dictionary)
 
+    def create_model(self):
+        model = Sequential()
 
 def load_training_data(file, test_percentage=0.2):
     '''
