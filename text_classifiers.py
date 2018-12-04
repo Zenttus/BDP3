@@ -36,7 +36,7 @@ class TextClassifierModel1:
         print('Creating model...')
         model = Sequential()
         embedding_size = 3
-        model.add(Embedding(input_dim=len(self.dictionary), output_dim=embedding_size, input_length=self.maxSentenceSize, name='layer_embedding'))
+        model.add(Embedding(input_dim=len(self.dictionary)+1, output_dim=embedding_size, input_length=self.maxSentenceSize, name='layer_embedding'))
         model.add(GRU(units=16, name="gru_1", return_sequences=True))
         model.add(GRU(units=8, name="gru_2", return_sequences=True))
         model.add(GRU(units=4, name="gru_3"))
