@@ -40,7 +40,7 @@ class TextClassifierModel1:
         model.add(GRU(units=16, name="gru_1", return_sequences=True))
         model.add(GRU(units=8, name="gru_2", return_sequences=True))
         model.add(GRU(units=4, name="gru_3"))
-        model.add(Dense(1, activation='sigmoid', name="dense_1"))
+        model.add( activation='softmax', name="dense_1")
         optimizer = Adam(lr=1e-3)
         model.compile(loss='binary_crossentropy', optimizer=optimizer,metrics=['accuracy'])
         print('Training model...')
@@ -48,7 +48,6 @@ class TextClassifierModel1:
         model.summary()
 
         txt = ["awesome movie", "Terrible movie", "that movie really sucks", "I like that movie"]
-        print(translate_to_tokens(txt, self.maxSentenceSize, self.dictionary)[0])
         pred = model.predict(translate_to_tokens(txt, self.maxSentenceSize, self.dictionary), self.maxSentenceSize, self.dictionary)
         print('\n prediction for \n', pred[:, 0])
 
