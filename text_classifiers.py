@@ -32,8 +32,21 @@ class TextClassifierModel1:
         self.x_train_tokens = translate_to_tokens(self.x_train, self.maxSentenceSize, self.dictionary)
         self.x_test_tokens = translate_to_tokens(self.x_test, self.maxSentenceSize, self.dictionary)
 
-    def create_model(self):
+    def initiate_model(self):
+        print('Creating model...')
         model = Sequential()
+        embedding_size = 8
+        model.add(Embedding(input_dim=len(self.dictionary), output_dim=embedding_size, input_length=self.maxSentenceSize, name='layer_embedding'))
+        model.add(GRU(units=16, name="gru_1", return_sequences=True))
+        model.add(GRU(units=8, name="gru_2", return_sequences=True))
+        model.add(GRU(units=4, name="gru_3"))
+        model.add(Dense(1, activation='sigmoid', name="dense_1"))
+        optimizer = Adam(lr=1e-3)
+        model.compile(loss='binary_crossentropy', optimizer=optimizer,metrics=['accuracy'])
+        print('Training model...')
+        model.train(self.x_train_tokens, self.y_train, validation_split=0.05, epochs=5, batch_size=32)
+
+
 
 def load_training_data(file, test_percentage=0.2):
     '''

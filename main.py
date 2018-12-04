@@ -12,3 +12,4 @@ if __name__ == '__main__':
     #tweets_catcher.get_tweets(manager)
 
     model = TextClassifierModel1('cleantextlabels7.csv')
+    model.initiate_model()
