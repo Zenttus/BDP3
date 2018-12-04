@@ -9,6 +9,7 @@ from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.models import save_model
+import keras.utils
 
 
 class TextClassifierModel1:
