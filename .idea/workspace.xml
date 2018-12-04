@@ -15,15 +15,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/text_classifiers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="139" column="53" selection-start-line="139" selection-start-column="53" selection-end-line="139" selection-end-column="53" />
+            <state relative-caret-position="221">
+              <caret line="51" column="91" selection-start-line="51" selection-start-column="91" selection-end-line="51" selection-end-column="91" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
                 <element signature="e#123#498#0" />
                 <element signature="e#495#1297#0" />
                 <element signature="e#1165#1362#0" />
+                <element signature="e#2225#2706#0" />
                 <element signature="e#2012#2114#0" />
                 <element signature="e#2871#3004#0" />
+                <element signature="e#3193#3556#0" />
               </folding>
             </state>
           </provider>
@@ -211,15 +213,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/text_classifiers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="139" column="53" selection-start-line="139" selection-start-column="53" selection-end-line="139" selection-end-column="53" />
+        <state relative-caret-position="221">
+          <caret line="51" column="91" selection-start-line="51" selection-start-column="91" selection-end-line="51" selection-end-column="91" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
             <element signature="e#123#498#0" />
             <element signature="e#495#1297#0" />
             <element signature="e#1165#1362#0" />
+            <element signature="e#2225#2706#0" />
             <element signature="e#2012#2114#0" />
             <element signature="e#2871#3004#0" />
+            <element signature="e#3193#3556#0" />
           </folding>
         </state>
       </provider>

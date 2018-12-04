@@ -49,7 +49,7 @@ class TextClassifierModel1:
 
         txt = ["awesome movie", "Terrible movie", "that movie really sucks", "I like that movie"]
         print(translate_to_tokens(txt, self.maxSentenceSize, self.dictionary)[0])
-        pred = model.predict(translate_to_tokens(txt), self.maxSentenceSize, self.dictionary)
+        pred = model.predict(translate_to_tokens(txt, self.maxSentenceSize, self.dictionary), self.maxSentenceSize, self.dictionary)
         print('\n prediction for \n', pred[:, 0])
 
 
