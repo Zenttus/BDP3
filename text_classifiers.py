@@ -40,7 +40,7 @@ class TextClassifierModel1:
         model.add(GRU(units=16, name="gru_1", return_sequences=True))
         model.add(GRU(units=8, name="gru_2", return_sequences=True))
         model.add(GRU(units=4, name="gru_3"))
-        model.add( activation='softmax', name="dense_1")
+        model.add(Activation('softmax'))
         optimizer = Adam(lr=1e-3)
         model.compile(loss='binary_crossentropy', optimizer=optimizer,metrics=['accuracy'])
         print('Training model...')
