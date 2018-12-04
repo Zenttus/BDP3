@@ -46,6 +46,7 @@ class TextClassifierModel1:
         print('Training model...')
         model.fit(np.array(self.x_train_tokens), np.array(self.y_train), validation_split=0.05, epochs=5, batch_size=32)
         model.summary()
+
         txt = ["awesome movie", "Terrible movie", "that movie really sucks", "I like that movie"]
         print(translate_to_tokens(txt, self.maxSentenceSize, self.dictionary)[0])
         pred = model.predict(translate_to_tokens(txt), self.maxSentenceSize, self.dictionary)
@@ -131,14 +132,15 @@ def get_max_sentence_size(sentences):
     return max_sentence
 
 
-def translate_to_tokens(sentences, maxSize, dictionary):
+def translate_to_tokens(sentences, max_size, dictionary):
     results = []
     for sentence in sentences:
-        seq = [0] * maxSize #0 = unknown
+        seq = [0] * max_size #0 = unknown
         sentence = re.sub(r'[^a-zA-Z0-9\s]', '', sentence).split()
+        sentence = [word.lower() for word in sentence]
         i = 0
         for word in sentence:
-            start = maxSize-len(sentence)
+            start = max_size-len(sentence)
             if word.lower() in dictionary.keys():
                 seq[i+start] = dictionary[word]
             i += 1

@@ -15,18 +15,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/text_classifiers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="49" column="76" selection-start-line="49" selection-start-column="76" selection-end-line="49" selection-end-column="76" />
+            <state relative-caret-position="186">
+              <caret line="139" column="53" selection-start-line="139" selection-start-column="53" selection-end-line="139" selection-end-column="53" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
                 <element signature="e#123#498#0" />
                 <element signature="e#495#1297#0" />
                 <element signature="e#1165#1362#0" />
-                <element signature="e#2225#2706#0" />
                 <element signature="e#2012#2114#0" />
                 <element signature="e#2871#3004#0" />
-                <element signature="e#3193#3556#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dict.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="159">
+              <caret line="984" column="7" selection-start-line="984" selection-end-line="984" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -52,6 +59,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>kness is in the air do not be fucking nasty make sure t</find>
+      <find>terribl</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -145,12 +153,12 @@
     <frame x="713" y="0" width="733" height="927" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25854382" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25854382" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32830188" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32830188" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.40377358" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -189,8 +197,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dict.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2860">
-          <caret line="5101" column="6" selection-start-line="5101" selection-end-line="5101" selection-end-column="6" />
+        <state relative-caret-position="159">
+          <caret line="984" column="7" selection-start-line="984" selection-end-line="984" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -203,17 +211,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/text_classifiers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="49" column="76" selection-start-line="49" selection-start-column="76" selection-end-line="49" selection-end-column="76" />
+        <state relative-caret-position="186">
+          <caret line="139" column="53" selection-start-line="139" selection-start-column="53" selection-end-line="139" selection-end-column="53" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
             <element signature="e#123#498#0" />
             <element signature="e#495#1297#0" />
             <element signature="e#1165#1362#0" />
-            <element signature="e#2225#2706#0" />
             <element signature="e#2012#2114#0" />
             <element signature="e#2871#3004#0" />
-            <element signature="e#3193#3556#0" />
           </folding>
         </state>
       </provider>
