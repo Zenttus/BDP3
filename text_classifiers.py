@@ -4,12 +4,11 @@ import numpy as np
 import tensorflow as tf
 
 from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense, GRU, Embedding
+from tensorflow.python.keras.layers import Dense, GRU, Embedding, Activation
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.models import save_model
-import keras.utils
 
 
 class TextClassifierModel1:
