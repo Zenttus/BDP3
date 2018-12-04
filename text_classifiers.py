@@ -45,7 +45,7 @@ class TextClassifierModel1:
         model.compile(loss='binary_crossentropy', optimizer=optimizer,metrics=['accuracy'])
         print('Training model...')
         model.fit(np.array(self.x_train_tokens), np.array(self.y_train), validation_split=0.05, epochs=5, batch_size=32)
-
+        model.summary()
 
 
 def load_training_data(file, test_percentage=0.2):
