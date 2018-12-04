@@ -35,8 +35,7 @@ class TextClassifierModel1:
     def initiate_model(self):
         print('Creating model...')
         model = Sequential()
-        embedding_size = 8
-        print(len(self.dictionary))
+        embedding_size = 3
         model.add(Embedding(input_dim=len(self.dictionary), output_dim=embedding_size, input_length=self.maxSentenceSize, name='layer_embedding'))
         model.add(GRU(units=16, name="gru_1", return_sequences=True))
         model.add(GRU(units=8, name="gru_2", return_sequences=True))
@@ -45,7 +44,7 @@ class TextClassifierModel1:
         optimizer = Adam(lr=1e-3)
         model.compile(loss='binary_crossentropy', optimizer=optimizer,metrics=['accuracy'])
         print('Training model...')
-        model.fit(self.x_train_tokens, self.y_train, validation_split=0.05, epochs=5, batch_size=32)
+        model.fit(np.array(self.x_train_tokens), np.array(self.y_train), validation_split=0.05, epochs=5, batch_size=32)
 
 
 
