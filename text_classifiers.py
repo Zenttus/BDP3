@@ -44,7 +44,7 @@ class TextClassifierModel1:
         optimizer = Adam(lr=1e-3)
         model.compile(loss='binary_crossentropy', optimizer=optimizer,metrics=['accuracy'])
         print('Training model...')
-        model.train(self.x_train_tokens, self.y_train, validation_split=0.05, epochs=5, batch_size=32)
+        model.fit(self.x_train_tokens, self.y_train, validation_split=0.05, epochs=5, batch_size=32)
 
 
 
