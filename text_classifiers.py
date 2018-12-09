@@ -24,7 +24,7 @@ class TextClassifierModel1:
             print("Dictionary created (size=" + str(len(self.dictionary.keys())) + "), saved as dict.txt.")
         else:
             print("Loading Dictionary")
-            self.dictionary = load_word_dictionary(self.dictionary)
+            self.dictionary = load_word_dictionary(dictionary)
             print("Dictionary created")
 
         # Tokenize data
