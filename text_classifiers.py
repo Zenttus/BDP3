@@ -13,7 +13,7 @@ from tensorflow.python.keras.models import save_model
 
 class TextClassifierModel1:
 
-    def __init__(self, file, dictionarydictionary=None):
+    def __init__(self, file, dictionary=None):
         # load data
         self.x_train, self.y_train, self.x_test, self.y_test = load_training_data(file)
         # load dictionary (or creates it)
