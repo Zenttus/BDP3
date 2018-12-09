@@ -13,7 +13,7 @@ from tensorflow.python.keras.models import save_model
 
 class TextClassifierModel1:
 
-    def __init__(self, file, dictionary=None):
+    def __init__(self, file, dictionarydictionary=None):
         # load data
         self.x_train, self.y_train, self.x_test, self.y_test = load_training_data(file)
         # load dictionary (or creates it)
@@ -60,7 +60,7 @@ def load_training_data(file, test_percentage=0.2):
     :return: trainingSet,
     '''
 
-    with open(file, 'r', encoding='UTF-8') as f:
+    with open(file, 'r') as f:
         tweets = f.readlines()
 
     shuffle(tweets) # Mitigating possible bias
