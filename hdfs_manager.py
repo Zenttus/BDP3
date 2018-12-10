@@ -1,42 +1,19 @@
-from twitter import OAuth, TwitterStream
-from hdfs_manager import HDFSManager
 import config
+from hdfs import InsecureClient
+from time import strftime, gmtime
 import subprocess
 import time
-from time import strftime, gmtime
 import visualizer
-import text_classifiers
-
 
 current_milli_time = lambda: int(round(time.time() * 1000))
-
-
-def get_tweets(hdfsmanager):
-    '''
-    It starts the recolection of tweets. And saves them using an HDFSManager.
-    :param hdfsmanager: Initiated HDFSManager
-    :return: None
-    '''
-    assert hdfsmanager.__class__ == HDFSManager
-
-    authorization = OAuth(config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET, config.CONSUMER_KEY, config.CONSUMER_SECRET)
-
-    stream = TwitterStream(auth=authorization)
-
-    tweets = stream.statuses.sample()
-
-    for tweet in tweets:
-        try:
-            if len(tweet) > 2:  #This filters the "deleted" tweets
-                hdfsmanager.save_tweet(tweet)
-        except Exception as e:
-            print(e)
-            pass
 
 
 class HDFSManager:
 
     def __init__(self):
+
+        # Start communication with HDFS
+        self.client_hdfs = InsecureClient(config.HDFS_SERVER) #toDO STILL NECESARY?
 
         # Create folder path
         subprocess.Popen(['hdfs dfs -mkdir ' + config.OUTPUT_FILE_PATH], shell=True)
@@ -61,6 +38,7 @@ class HDFSManager:
         self.tick = current_milli_time()
 
     def save_tweet(self, tweet):
+
         try:
             output = open("./temp.json", "a+", encoding='utf-8')
             output.write(str(tweet) + '\n')
@@ -69,7 +47,7 @@ class HDFSManager:
         finally:
             output.close()
 
-        # Once the interval is done, send file to HDFS and start a new one.
+        #Once the interval is done, send file to HDFS and start a new one.
 
         if current_milli_time() - self.tick > config.INTERVAL * 1000:
             print("Moving tweets to hdfs...")
@@ -82,8 +60,7 @@ class HDFSManager:
             # Clear temp file
             open("./temp.json", "w").close()
             print("DONE")
-
-            text_classifiers.run()
+            print("Analysing data...")
             visualizer.run()
-
+            print("DONE")
 
