@@ -2,9 +2,10 @@ from random import shuffle
 import re
 import numpy as np
 import tensorflow as tf
+import keras as K
 
 from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense, GRU, Embedding, Activation
+from tensorflow.python.keras.layers import Dense, GRU, Embedding, Activation, LSTM
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
@@ -25,31 +26,96 @@ class TextClassifierModel1:
         else:
             print("Loading Dictionary")
             self.dictionary = load_word_dictionary(dictionary)
-            print("Dictionary created")
+            print("Dictionary loaded")
 
         # Tokenize data
         self.maxSentenceSize = get_max_sentence_size(self.x_train+self.x_test)
         self.x_train_tokens = translate_to_tokens(self.x_train, self.maxSentenceSize, self.dictionary)
         self.x_test_tokens = translate_to_tokens(self.x_test, self.maxSentenceSize, self.dictionary)
 
-    def initiate_model(self):
-        print('Creating model...')
-        model = Sequential()
-        embedding_size = 3
-        model.add(Embedding(input_dim=len(self.dictionary)+1, output_dim=embedding_size, input_length=self.maxSentenceSize, name='layer_embedding'))
-        model.add(GRU(units=16, name="gru_1", return_sequences=True))
-        model.add(GRU(units=8, name="gru_2", return_sequences=True))
-        model.add(GRU(units=4, name="gru_3"))
-        model.add(Activation('softmax'))
-        optimizer = Adam(lr=1e-3)
-        model.compile(loss='binary_crossentropy', optimizer=optimizer,metrics=['accuracy'])
-        print('Training model...')
-        model.fit(np.array(self.x_train_tokens), np.array(self.y_train), validation_split=0.05, epochs=5, batch_size=32)
-        model.summary()
+        print(self.x_train_tokens[10])
+        print(self.y_train[10])
+        print(self.x_train[10])
 
-        txt = ["awesome movie", "Terrible movie", "that movie really sucks", "I like that movie"]
-        pred = model.predict(translate_to_tokens(txt, self.maxSentenceSize, self.dictionary), self.maxSentenceSize, self.dictionary)
-        print('\n prediction for \n', pred[:, 0])
+    def initiate_model(self, weights=None):
+        print('Creating model...')
+        words = len(self.dictionary)
+        vec_len = 100
+        model = Sequential()
+        model.add(Embedding(input_dim=words, output_dim=vec_len, name='layer_embedding'))
+        model.add(LSTM(units=50, dropout=0.2, recurrent_dropout=0.2))
+        model.add(Dense(units=3, activation='sigmoid'))
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+        print(model.summary())
+        # Training or loading
+        if weights is None:
+            print('Training model...')
+            model.fit(self.x_train_tokens, np.array(self.y_train), validation_split=0.05, epochs=5, batch_size=32)
+            print("Saving model...")
+            model.save('sentiment_model1.h5')
+        else:
+            print('Loading weights...')
+            model.load_weights(weights)
+        self.model = model
+        # Evaluation
+        # loss = model.evaluate(np.array(self.x_test_tokenssd), np.array(self.y_test))
+        # print(loss)
+
+    def predict(self, text):
+        return self.model.predict_classes(np.array(translate_to_tokens(text, self.maxSentenceSize, self.dictionary)))
+
+
+class TextClassifierModel2:
+
+    def __init__(self, file, dictionary=None):
+        # load data
+        self.x_train, self.y_train, self.x_test, self.y_test = load_training_data(file)
+        # load dictionary (or creates it)
+        if dictionary is None:
+            print("Creating Dictionary...")
+            self.dictionary = create_word_dictionary(self.x_train + self.x_test)
+            save_dict(self.dictionary)
+            print("Dictionary created (size=" + str(len(self.dictionary.keys())) + "), saved as dict.txt.")
+        else:
+            print("Loading Dictionary")
+            self.dictionary = load_word_dictionary(dictionary)
+            print("Dictionary loaded")
+
+        # Tokenize data
+        self.maxSentenceSize = get_max_sentence_size(self.x_train+self.x_test)
+        self.x_train_tokens = translate_to_tokens(self.x_train, self.maxSentenceSize, self.dictionary)
+        self.x_test_tokens = translate_to_tokens(self.x_test, self.maxSentenceSize, self.dictionary)
+
+        print(self.x_train_tokens[10])
+        print(self.y_train[10])
+        print(self.x_train[10])
+
+    def initiate_model(self, weights=None):
+        print('Creating model...')
+        words = len(self.dictionary)
+        vec_len = 100
+        model = Sequential()
+        model.add(Embedding(input_dim=words, output_dim=vec_len, name='layer_embedding'))
+        model.add(LSTM(units=10, dropout=0.2, recurrent_dropout=0.2))
+        model.add(Dense(units=3, activation='sigmoid'))
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+        print(model.summary())
+        # Training or loading
+        if weights is None:
+            print('Training model...')
+            model.fit(self.x_train_tokens, np.array(self.y_train), validation_split=0.05, epochs=5, batch_size=32)
+            print("Saving model...")
+            model.save('sentiment_model2.h5')
+        else:
+            print('Loading weights...')
+            model.load_weights(weights)
+        self.model = model
+        # Evaluation
+        # loss = model.evaluate(np.array(self.x_test_tokenssd), np.array(self.y_test))
+        # print(loss)
+
+    def predict(self, text):
+        return self.model.predict_classes(np.array(translate_to_tokens(text, self.maxSentenceSize, self.dictionary)))
 
 
 def load_training_data(file, test_percentage=0.2):
@@ -70,7 +136,7 @@ def load_training_data(file, test_percentage=0.2):
     for tweet in tweets:
         data = tweet.split(',')
         text.append(data[0])
-        labels.append(data[1])
+        labels.append(int_to_vec(int(data[1].strip())))
 
     # Dividing dataset into training and testing.
     test_size = int(len(labels)*test_percentage)
@@ -83,8 +149,19 @@ def load_training_data(file, test_percentage=0.2):
     return x_train, y_train, x_test, y_test
 
 
+def int_to_vec(num, max=3):
+    out = []
+    for i in range(max):
+        if num == i:
+            out.append(1)
+        else:
+            out.append(0)
+    return out
+
+
 def load_word_dictionary(file):
-    d = dict
+    #TODO undefined values, start/end of tweet
+    d = {}
     count = 1 # Starts with one since 0 is for unknown
     with open(file, 'r') as f:
         for word in f.readlines():
@@ -94,8 +171,8 @@ def load_word_dictionary(file):
 
 
 def create_word_dictionary(sentences, thresh=5):
-    count = dict()
-    words = dict()
+    count = {}
+    words = {}
 
     for sentence in sentences:
         w = re.sub(r'[^a-zA-Z0-9\s]', '', sentence).split()

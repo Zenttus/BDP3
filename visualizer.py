@@ -11,7 +11,7 @@ from bokeh.transform import cumsum
 def load_data(folder, limit=24):
     # Model 1
     mod1 = []
-    f = open(folder+'/model1results', 'r')
+    f = open(folder + '/model1results', 'r')
     lines = f.readlines()
     count = 0
     for line in reversed(lines):
